@@ -2,7 +2,9 @@
 
 ![](https://i.ibb.co/yP64MvT/logo-small.png)
 ####  Migrate data from SQL to NoSQL easily
-![](https://img.shields.io/github/stars/pandao/editor.md.svg) ![](https://img.shields.io/github/forks/pandao/editor.md.svg) ![](https://img.shields.io/github/tag/pandao/editor.md.svg) ![](https://img.shields.io/github/release/pandao/editor.md.svg) ![](https://img.shields.io/github/issues/pandao/editor.md.svg) ![](https://img.shields.io/bower/v/editor.md.svg)
+![](https://img.shields.io/badge/python-3.8%20%7C%203.9-blue)
+![](https://img.shields.io/badge/black-v21.6b0-blue)
+![](https://img.shields.io/github/downloads/facundopadilla/sql2nosql/total?style=plastic)
 
 ## Installation
 
