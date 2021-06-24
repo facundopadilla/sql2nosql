@@ -37,7 +37,7 @@ SQL2NoSQL takes care of the rest.
 
 ### ⚠️ Attention:
 
-It is not yet implemented with PostgreSQL and SQLServer, but will be tested with those databases soon. For the moment, it works with MySQL, MariaDB and SQLite3.
+It is not yet implemented with PostgreSQL, SQLite3 and SQLServer, but will be tested with those databases soon. For the moment, it works with MySQL and MariaDB.
 
 ## How to use 🤓
 #### Basic usage
