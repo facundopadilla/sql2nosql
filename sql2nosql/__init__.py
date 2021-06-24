@@ -19,6 +19,8 @@ class Migrator(object):
         nosql_config: Dict[str, str],
         nosql_client: str,
     ):
+        self.__sql_client_str = sql_client
+        self.__nosql_client_str = nosql_client
         self.config["sql"] = sql_config if isinstance(sql_config, dict) else None
         self.config["nosql"] = nosql_config if isinstance(nosql_config, dict) else None
         self.sql_client = (
@@ -31,13 +33,14 @@ class Migrator(object):
     def __get_connector(self, client: str) -> Any:
         if isinstance(client, str) and client:
             try:
-                if client == "sqlite3":
-                    from sqlite3 import connect
-
-                    return connect
-                elif client == "pymysql":
+                if client == "pymysql":
                     from pymysql import connect
 
+                    if "username" in self.config["sql"].keys():
+                        aux = self.config["sql"]["username"]
+                        del self.config["sql"]["username"]
+                        self.config["sql"]["user"] = aux
+                        
                     return connect
                 elif client == "mysql.connector":
                     from mysql.connector import connect
@@ -57,11 +60,20 @@ class Migrator(object):
             "The argument 'client' must be of type 'string' and must not be empty."
         )
 
+    def __get_cursor(self, client: str) -> Any:
+        if self.__sql_client_str == "mysql.connector":
+            return self.sql_client.cursor(dictionary=True)
+        elif self.__sql_client_str == "pymysql":
+            from pymysql.cursors import DictCursor
+            return self.sql_client.cursor(DictCursor)
+        elif self.__sql_client == "sqlite3":
+            raise NotImplementedError
+
     def migrate_data(self, tables: List[str], query: Optional[str] = None) -> None:
         if isinstance(tables, list) and len(tables):
             if self.sql_client and self.nosql_client:
                 db_nosql = self.nosql_client[self.config["sql"]["database"]]
-                cursor = self.sql_client.cursor(dictionary=True)
+                cursor = self.__get_cursor(self.sql_client)
                 for table in tqdm(tables):
                     mongo_collection = db_nosql[table]
                     if query:
