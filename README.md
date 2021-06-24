@@ -7,6 +7,9 @@
 ![](https://img.shields.io/github/downloads/facundopadilla/sql2nosql/total?style=plastic)
 
 ## Installation
+```python
+pip install sql2nosql
+```
 
 ## How to use
 #### Basic usage
