@@ -5,6 +5,7 @@
 ![](https://img.shields.io/badge/python-%203.6%20|%203.7%20|%203.8%20|%203.9%20-blue)
 ![](https://img.shields.io/badge/black-v21.6b0-blue)
 ![](https://img.shields.io/github/downloads/facundopadilla/sql2nosql/total?style=plastic)
+![](https://img.shields.io/pypi/v/sql2nosql)
 
 
 ## Installation 💯
