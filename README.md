@@ -9,7 +9,7 @@
 ## Installation
 
 ## How to use
-####Basic usage
+#### Basic usage
 You indicate the SQL and NoSQL database connection data in a dictionary, and the "client"/"engine" you normally use for this conversion (I recommend PyMongo for MongoDB).
 ```python
 from sql2nosql import Migrator
