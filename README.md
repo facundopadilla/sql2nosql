@@ -5,9 +5,7 @@
 ![](https://img.shields.io/badge/python-%203.6%20|%203.7%20|%203.8%20|%203.9%20-blue)
 ![](https://img.shields.io/badge/black-v21.6b0-blue)
 ![](https://img.shields.io/github/downloads/facundopadilla/sql2nosql/total?style=plastic)
-![](https://img.shields.io/pypi/v/sql2nosql)
-![](https://img.shields.io/github/last-commit/facundopadilla/sql2nosql)
-![](https://img.shields.io/github/issues-pr/facundopadilla/sql2nosql)
+
 
 ## Installation
 ```python
@@ -47,3 +45,6 @@ migrator = Migrator(
 migrator.migrate_data(tables=["customers", "employees", "offices"])
 
 ```
+## Full example with another dependencies
+
+If you want to see a more complete example of how to use this package, visit this repository: [Click me!](https://github.com/facundopadilla/sql2nosql-example "Click me!")
