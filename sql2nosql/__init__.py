@@ -1,7 +1,7 @@
 import simplejson as json
 
 from .errors import NoDBClients
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from tqdm import tqdm
 
 
@@ -57,7 +57,7 @@ class Migrator(object):
             "The argument 'client' must be of type 'string' and must not be empty."
         )
 
-    def migrate_data(self, tables: list, query: Optional[str] = None) -> None:
+    def migrate_data(self, tables: List[str], query: Optional[str] = None) -> None:
         if isinstance(tables, list) and len(tables):
             if self.sql_client and self.nosql_client:
                 db_nosql = self.nosql_client[self.config["sql"]["database"]]
@@ -73,4 +73,5 @@ class Migrator(object):
                     mongo_collection.insert_many(data)
             else:
                 raise NoDBClients
-        raise TypeError("The argument 'tables' is expecting a list of table names.")
+        else:
+            raise TypeError("The argument 'tables' is expecting a list of table names.")
