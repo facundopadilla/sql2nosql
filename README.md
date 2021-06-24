@@ -8,7 +8,7 @@
 
 ## Installation
 ```python
-pip install sql2nosql
+pip install sql2nosql --upgrade
 ```
 
 ## How to use
