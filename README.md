@@ -1,4 +1,3 @@
-# SQL2NoSQL 
 <p align="center">
     <img src="https://i.ibb.co/VDNZpvZ/logo-transparent.png" width="450">
 </p>
