@@ -1,11 +1,16 @@
 # SQL2NoSQL 
-
-![](https://i.ibb.co/yP64MvT/logo-small.png)
-####  Migrate data from SQL to NoSQL easily
-![](https://img.shields.io/badge/python-%203.6%20|%203.7%20|%203.8%20|%203.9%20-blue)
-![](https://img.shields.io/badge/black-v21.6b0-blue)
-![](https://img.shields.io/github/downloads/facundopadilla/sql2nosql/total?style=plastic)
-![](https://img.shields.io/pypi/v/sql2nosql)
+<p align="center">
+    <img src="https://i.ibb.co/VDNZpvZ/logo-transparent.png" width="450">
+</p>
+<p align="center" style="font-size:200px;">
+    Migrate data from SQL to NoSQL easily
+</p>
+<div align="center" style="display:inline;">
+<img src="https://img.shields.io/badge/python-%203.6%20|%203.7%20|%203.8%20|%203.9%20-blue" />
+<img src="https://img.shields.io/badge/black-v21.6b0-blue" />
+<img src="https://img.shields.io/github/downloads/facundopadilla/sql2nosql/total?style=plastic" />
+<img src="https://img.shields.io/pypi/v/sql2nosql" />
+</div>
 
 
 ## Installation 💯
@@ -76,3 +81,11 @@ migrator.migrate_data(tables=["customers", "employees", "offices"])
 ## Full example with another dependencies 👽
 
 If you want to see a more complete example of how to use this package, visit this repository: [Click me!](https://github.com/facundopadilla/sql2nosql-example "Click me!")
+
+
+
+https://user-images.githubusercontent.com/64610246/123431691-eeeda480-d59f-11eb-8dbc-0865cace8a39.mp4
+
+
+
+
