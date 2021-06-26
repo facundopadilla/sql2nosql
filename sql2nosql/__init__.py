@@ -1,79 +1,68 @@
 import simplejson as json
 
 from .errors import NoDBClients
-from typing import Dict, Any, Optional, List
+from .utils import get_connector
+
+from typing import Dict, Any, Optional, List, Union
 from tqdm import tqdm
 
 
 class Migrator(object):
-    """This class allows you to extract table records, pass them to a Python dictionary and finally insert them into a NoSQL collection."""
+    """
+    Args:
+        object ([type]): refers to a parent class
 
-    sql_client: Any = None
-    nosql_client: Any = None
-    config: Dict[dict, Dict[str, Any]] = {}
+    Raises:
+        NoDBClients: when there are no clients
+        TypeError: when wrong arguments are passed on
+
+    Returns: Nothing is returned, a progress bar is displayed on the terminal or console.
+    """
+
+    sql_client: str = None
+    nosql_client: str = None
+    __sql_client: Any = None
+    __nosql_client: Any = None
+    config: Dict[str, Dict[str, Union[str, int]]] = {}
 
     def __init__(
         self,
-        sql_config: Dict[str, str],
+        sql_config: Dict[str, Union[str, int]],
         sql_client: str,
-        nosql_config: Dict[str, str],
+        nosql_config: Dict[str, Union[str, int]],
         nosql_client: str,
     ):
-        self.__sql_client_str = sql_client
-        self.__nosql_client_str = nosql_client
-        self.config["sql"] = sql_config if isinstance(sql_config, dict) else None
+        self.sql_client = sql_client
+        self.nosql_client = nosql_client
+        self.config["sql"] = self.__check_config(sql_client, sql_config)
         self.config["nosql"] = nosql_config if isinstance(nosql_config, dict) else None
-        self.sql_client = (
-            self.__get_connector(sql_client)(**sql_config) if sql_config else None
+        self.__sql_client = (
+            get_connector(sql_client)(**self.config["sql"]) if sql_config else None
         )
-        self.nosql_client = (
-            self.__get_connector(nosql_client)(**nosql_config) if nosql_config else None
-        )
-
-    def __get_connector(self, client: str) -> Any:
-        if isinstance(client, str) and client:
-            try:
-                if client == "pymysql":
-                    from pymysql import connect
-
-                    if "username" in self.config["sql"].keys():
-                        aux = self.config["sql"]["username"]
-                        del self.config["sql"]["username"]
-                        self.config["sql"]["user"] = aux
-                        
-                    return connect
-                elif client == "mysql.connector":
-                    from mysql.connector import connect
-
-                    return connect
-                elif client == "pymongo":
-                    from pymongo import MongoClient
-
-                    return MongoClient
-                else:
-                    raise NotImplementedError
-            except ModuleNotFoundError:
-                raise ModuleNotFoundError(
-                    f"The {client} client is not installed in the Python packages."
-                )
-        raise TypeError(
-            "The argument 'client' must be of type 'string' and must not be empty."
+        self.__nosql_client = (
+            get_connector(nosql_client)(**nosql_config) if nosql_config else None
         )
 
-    def __get_cursor(self, client: str) -> Any:
-        if self.__sql_client_str == "mysql.connector":
-            return self.sql_client.cursor(dictionary=True)
-        elif self.__sql_client_str == "pymysql":
+    def __check_config(self, client: str, config: Dict[str, Union[str, int]]) -> dict:
+        if client == "pymysql":
+            if "username" in config.keys():
+                config["user"] = config.pop("username")
+                return config
+        return config
+
+    def __get_cursor(self):
+        if self.sql_client == "mysql.connector":
+            return self.__sql_client.cursor(dictionary=True)
+        elif self.sql_client == "pymysql":
             from pymysql.cursors import DictCursor
-            return self.sql_client.cursor(DictCursor)
-        elif self.__sql_client == "sqlite3":
-            raise NotImplementedError
+
+            return self.__sql_client.cursor(DictCursor)
 
     def migrate_data(self, tables: List[str], query: Optional[str] = None) -> None:
         if isinstance(tables, list) and len(tables):
-            if self.sql_client and self.nosql_client:
-                db_nosql = self.nosql_client[self.config["sql"]["database"]]
-                cursor = self.__get_cursor(self.sql_client)
+            if self.__sql_client and self.__nosql_client:
+                db_nosql = self.__nosql_client[self.config["sql"]["database"]]
+                cursor = self.__get_cursor()
                 for table in tqdm(tables):
                     mongo_collection = db_nosql[table]
                     if query:
@@ -83,6 +72,9 @@ class Migrator(object):
 
                     data = json.loads(json.dumps(cursor.fetchall()))
                     mongo_collection.insert_many(data)
+                cursor.close()
+                self.__sql_client.close()
+                self.__nosql_client.close()
             else:
                 raise NoDBClients
         else:
