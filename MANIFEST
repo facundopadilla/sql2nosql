@@ -3,4 +3,5 @@ setup.cfg
 setup.py
 sql2nosql/__init__.py
 sql2nosql/errors.py
+sql2nosql/utils.py
 test/test_migrator.py
