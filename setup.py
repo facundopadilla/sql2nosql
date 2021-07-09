@@ -9,7 +9,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 setup(
   name = 'sql2nosql',
   packages = ['sql2nosql'],
-  version = '0.3.31',
+  version = '0.3.32',
   license='MIT',
   description = 'Migrate data from SQL to NoSQL easily',
   author = 'Facundo Padilla',
