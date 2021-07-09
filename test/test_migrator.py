@@ -16,6 +16,7 @@ pip install mysql-connector-python pymysql pymongo
 
 
 class TestSQL2NoSQL(TestCase):
+
     def test_migrator(self):
         # region -- Erroneous arguments --
 

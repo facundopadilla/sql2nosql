@@ -1,7 +1,7 @@
 import simplejson as json
 
 from .errors import NoDBClients
-from .utils import get_connector
+from .utils import get_connector, get_cursor
 
 from typing import Dict, Any, Optional, List, Union
 from tqdm import tqdm
@@ -47,16 +47,14 @@ class Migrator(object):
         if client == "pymysql":
             if "username" in config.keys():
                 config["user"] = config.pop("username")
-                return config
         return config
 
     def __get_cursor(self):
         if self.sql_client == "mysql.connector":
             return self.__sql_client.cursor(dictionary=True)
-        elif self.sql_client == "pymysql":
-            from pymysql.cursors import DictCursor
-
-            return self.__sql_client.cursor(DictCursor)
+        else:
+            cursor = get_cursor(self.sql_client)
+            return self.__sql_client.cursor(cursor)
 
     def migrate_data(self, tables: List[str], query: Optional[str] = None) -> None:
         if isinstance(tables, list) and len(tables):
