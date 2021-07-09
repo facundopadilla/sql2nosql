@@ -1,0 +1,5 @@
+test/__pycache__/__init__.cpython-36.pyc
+test/__pycache__/test_migrator.cpython-36.pyc
+__pycache__
+*.pyc
+
