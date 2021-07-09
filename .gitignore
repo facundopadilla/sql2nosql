@@ -1,5 +1,9 @@
 test/__pycache__/__init__.cpython-36.pyc
 test/__pycache__/test_migrator.cpython-36.pyc
+sql2nosql/__pycache__
+sql2nosql/__pycache__/
 __pycache__
+__pycache__/
+*.py[cod]
 *.pyc
 
