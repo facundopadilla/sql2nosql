@@ -76,6 +76,15 @@ class TestSQL2NoSQL(TestCase):
                 Migrator(_dict, "pymysql", {}, "example")
             except Exception as e:
                 self.assertIsInstance(e, OperationalError)
+        
+        # Trying with psycopg2
+        from psycopg2 import OperationalError
+
+        for _dict in list_powerdict:
+            try:
+                Migrator(_dict, "psycopg2", {}, "example")
+            except Exception as e:
+                self.assertIsInstance(e, OperationalError)
 
         # Trying with PyMongo
         from pymongo.errors import ConfigurationError
