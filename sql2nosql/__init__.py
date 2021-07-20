@@ -65,7 +65,11 @@ class Migrator(object):
             cursor = get_cursor(self.sql_client)
             if self.sql_client == "psycopg2":
                 return self.__sql_client.cursor(cursor_factory=cursor)
-            return self.__sql_client.cursor(cursor)   
+            return self.__sql_client.cursor(cursor)
+    
+    def __update_table(self, table: str) -> str:
+        updated_table = table.replace("'", "").replace('"', '')
+        return updated_table
 
     def migrate_data(self, tables: List[str], query: Optional[str] = None) -> None:
         if isinstance(tables, list) and len(tables):
@@ -73,7 +77,8 @@ class Migrator(object):
                 db_nosql = self.__nosql_client[self.old_config["sql"]["database"]]
                 cursor = self.__get_cursor()
                 for table in tqdm(tables):
-                    mongo_collection = db_nosql[table]
+                    upd_table = self.__update_table(table)
+                    mongo_collection = db_nosql[upd_table]
                     if query:
                         cursor.execute(query)
                     else:
