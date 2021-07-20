@@ -1,5 +1,19 @@
-import importlib
+from importlib import import_module
 from typing import Any
+
+# Helpers
+clients = {
+    "pymysql": "connect",
+    "mysql.connector": "connect",
+    "psycopg2": "connect",
+    "pymongo": "MongoClient",
+}
+
+cursors = {
+    "pymysql": ["pymysql.cursors", "DictCursor"],
+    "psycopg2": ["psycopg2.extras", "RealDictCursor"],
+}
+
 
 def get_connector(client: str) -> Any:
     """
@@ -17,18 +31,16 @@ def get_connector(client: str) -> Any:
     """
     if isinstance(client, str) and client:
         try:
-            if client in ["pymysql", "mysql.connector"]:
-                return getattr(importlib.import_module(client), "connect")
-            elif client == "pymongo":
-                return getattr(importlib.import_module(client), "MongoClient")
-            else:
-                raise NotImplementedError
+            if client in clients:
+                return getattr(import_module(client), clients[client])
+            raise NotImplementedError
         except ModuleNotFoundError:
             print(f"The {client} client is not installed in the Python packages.")
             raise
     raise TypeError(
         "The argument 'client' must be of type 'string' and must not be empty."
     )
+
 
 def get_cursor(client: str) -> Any:
     """
@@ -45,9 +57,8 @@ def get_cursor(client: str) -> Any:
         Any: A client with cursor
     """
     if isinstance(client, str) and client:
-        if client == "pymysql":
-            client += ".cursors"
-            return getattr(importlib.import_module(client), "DictCursor")
+        if client in cursors:
+            return getattr(import_module(cursors[client][0]), cursors[client][1])
         else:
             raise NotImplementedError
     raise TypeError(
