@@ -12,4 +12,4 @@ def powerset_dict(iterable: dict) -> List[Dict[Any, Any]]:
             )
         ]
     else:
-        raise TypeError(f"The 'iterable' argument is not a dictionary.")
+        raise TypeError("The 'iterable' argument is not a dictionary.")
