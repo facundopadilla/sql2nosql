@@ -40,9 +40,16 @@ Migrator(sql_client="pymysql")
 
 SQL2NoSQL takes care of the rest.
 
+| Engine  | Supported  | Client / Dependence|
+| :------------: | :------------: | :------------: |
+| MySQL/MariaDB  | ✅  |mysql.connector, pymysql|
+| PostgreSQL  | ✅   |psycopg2|
+| MongoDB  | ✅ |  PyMongo |
+| Other DB  |  👷  | in progress...|
+
 ### ⚠️ Attention:
 
-It is not yet implemented with PostgreSQL, SQLite3 and SQLServer, but will be tested with those databases soon. For the moment, it works with MySQL and MariaDB.
+It is not yet implemented with SQLite3 and SQLServer, but will be tested with those databases soon. For the moment, it works with MySQL, MariaDB and PostgreSQL.
 
 ## How to use 🤓
 #### Basic usage
@@ -77,7 +84,13 @@ migrator = Migrator(
 migrator.migrate_data(tables=["customers", "employees", "offices"])
 
 ```
-## Full example with another dependencies 👽
+## Full examples with another dependencies 👽
+
+| Examples | Link  |
+| :------------: | :------------: |
+| MySQL & MongoDB  | [Click me!](https://github.com/facundopadilla/sql2nosql-example "Click me!")  |
+| PostgreSQL & MongoDB  | [Click me!](https://github.com/facundopadilla/sql2nosql-postgresql-mongodb "Click me!")  |
+
 
 If you want to see a more complete example of how to use this package, visit this repository: [Click me!](https://github.com/facundopadilla/sql2nosql-example "Click me!")
 
