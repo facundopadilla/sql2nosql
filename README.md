@@ -1,3 +1,5 @@
+# ⚠️ This project is no longer actively maintained. ⚠️
+
 <p align="center">
     <img src="https://i.ibb.co/VDNZpvZ/logo-transparent.png" width="450">
 </p>
